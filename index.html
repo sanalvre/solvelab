@@ -28,7 +28,7 @@
       top: 2rem;
       left: 2rem;
       z-index: 10;
-      height: clamp(56px, 7vw, 96px);
+      height: clamp(64px, 8.5vw, 110px);
       width: auto;
       mix-blend-mode: lighten;
     }
@@ -58,30 +58,30 @@
       margin-bottom: 2rem;
     }
 
+    /* Text wrapped around icon - SVG path */
     .orbit-ring {
       position: absolute;
       width: 100%;
       height: 100%;
-      transform-style: preserve-3d;
       animation: orbit-spin 25s linear infinite;
     }
 
-    @keyframes orbit-spin {
-      from { transform: rotateY(0deg); }
-      to { transform: rotateY(360deg); }
+    .orbit-ring svg {
+      width: 100%;
+      height: 100%;
     }
 
-    /* Letters orbiting in a circle */
-    .orbit-letter {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      font-size: clamp(0.9rem, 2.2vw, 1.3rem);
+    .orbit-ring text {
+      font-family: 'Syne', sans-serif;
+      font-size: 18px;
       font-weight: 700;
-      letter-spacing: 0.1em;
-      color: #fff;
-      transform-origin: center center;
-      white-space: nowrap;
+      letter-spacing: 0.3em;
+      fill: #fff;
+    }
+
+    @keyframes orbit-spin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
     }
 
     /* Center star icon - six-pointed, revolving */
@@ -123,7 +123,18 @@
 
   <main class="content">
     <div class="orbit-scene">
-      <div class="orbit-ring" id="orbitRing"></div>
+      <div class="orbit-ring">
+        <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <path id="circlePath" d="M 100,100 m -75,0 a 75,75 0 1,1 150,0 a 75,75 0 1,1 -150,0" />
+          </defs>
+          <text>
+            <textPath href="#circlePath" startOffset="0">
+              COMING SOON &bull; COMING SOON &bull; COMING SOON &bull;
+            </textPath>
+          </text>
+        </svg>
+      </div>
       <div class="center-star">
         <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
           <g stroke="#fff" stroke-width="5" stroke-linecap="round">
@@ -137,22 +148,5 @@
     <p class="tagline">Adapt, or get left behind.</p>
   </main>
 
-  <script>
-    const text = 'COMING SOON';
-    const radiusVw = 32;
-    const letters = text.split('');
-
-    const ring = document.getElementById('orbitRing');
-    letters.forEach((char, i) => {
-      const span = document.createElement('span');
-      span.className = 'orbit-letter';
-      span.textContent = char === ' ' ? '\u00A0' : char;
-      const angle = (i / letters.length) * 2 * Math.PI - Math.PI / 2;
-      const x = Math.cos(angle) * radiusVw;
-      const y = Math.sin(angle) * radiusVw;
-      span.style.transform = `translate(-50%, -50%) translate(${x}vw, ${y}vw) rotate(${angle * (180 / Math.PI) + 90}deg)`;
-      ring.appendChild(span);
-    });
-  </script>
 </body>
 </html>
