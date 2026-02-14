@@ -16,122 +16,24 @@
 
     body {
       min-height: 100vh;
-      background: radial-gradient(ellipse 120% 120% at 50% 50%, #0a0512 0%, #030108 50%, #000 100%);
+      background: #000;
       font-family: 'Syne', -apple-system, BlinkMacSystemFont, sans-serif;
       color: #fff;
-      overflow-x: hidden;
-    }
-
-    /* Galaxy background layers */
-    .bg-wrapper {
-      position: fixed;
-      inset: 0;
-      z-index: 0;
       overflow: hidden;
     }
 
-    /* Nebula orbs - galaxy feel */
-    .orb {
-      position: absolute;
-      border-radius: 50%;
-      filter: blur(80px);
-      animation: float 25s ease-in-out infinite;
+    /* Top-left logo */
+    .logo-top {
+      position: fixed;
+      top: 2rem;
+      left: 2rem;
+      z-index: 10;
+      height: clamp(56px, 7vw, 96px);
+      width: auto;
+      mix-blend-mode: lighten;
     }
 
-    .orb-1 {
-      width: 70vw;
-      height: 70vw;
-      background: radial-gradient(circle, rgba(120, 60, 200, 0.5) 0%, rgba(80, 30, 140, 0.3) 40%, transparent 70%);
-      top: -25%;
-      left: -15%;
-      opacity: 0.8;
-      animation-delay: 0s;
-      animation-duration: 28s;
-    }
-
-    .orb-2 {
-      width: 60vw;
-      height: 60vw;
-      background: radial-gradient(circle, rgba(180, 80, 220, 0.45) 0%, rgba(120, 40, 180, 0.25) 45%, transparent 70%);
-      bottom: -20%;
-      right: -15%;
-      opacity: 0.75;
-      animation-delay: -8s;
-      animation-duration: 32s;
-    }
-
-    .orb-3 {
-      width: 50vw;
-      height: 50vw;
-      background: radial-gradient(circle, rgba(80, 100, 220, 0.4) 0%, rgba(50, 60, 160, 0.2) 50%, transparent 70%);
-      top: 40%;
-      left: 60%;
-      opacity: 0.7;
-      animation-delay: -15s;
-      animation-duration: 24s;
-    }
-
-    .orb-4 {
-      width: 45vw;
-      height: 45vw;
-      background: radial-gradient(circle, rgba(220, 100, 200, 0.35) 0%, rgba(160, 50, 140, 0.15) 50%, transparent 70%);
-      top: 60%;
-      left: 10%;
-      opacity: 0.65;
-      animation-delay: -5s;
-      animation-duration: 30s;
-    }
-
-    .orb-5 {
-      width: 55vw;
-      height: 55vw;
-      background: radial-gradient(circle, rgba(100, 80, 220, 0.3) 0%, rgba(60, 40, 150, 0.15) 55%, transparent 75%);
-      top: 10%;
-      right: 10%;
-      opacity: 0.6;
-      animation-delay: -12s;
-      animation-duration: 26s;
-    }
-
-    @keyframes float {
-      0%, 100% { transform: translate(0, 0) scale(1); }
-      25% { transform: translate(4%, -6%) scale(1.08); }
-      50% { transform: translate(-5%, 4%) scale(0.95); }
-      75% { transform: translate(6%, 5%) scale(1.05); }
-    }
-
-    /* Starfield */
-    .starfield {
-      position: absolute;
-      inset: 0;
-      background-image:
-        radial-gradient(2px 2px at 20% 30%, rgba(255,255,255,0.8), transparent),
-        radial-gradient(2px 2px at 40% 70%, rgba(255,255,255,0.6), transparent),
-        radial-gradient(1px 1px at 50% 50%, rgba(255,255,255,0.9), transparent),
-        radial-gradient(2px 2px at 80% 10%, rgba(255,255,255,0.5), transparent),
-        radial-gradient(1px 1px at 90% 60%, rgba(255,255,255,0.7), transparent),
-        radial-gradient(2px 2px at 15% 80%, rgba(255,255,255,0.4), transparent),
-        radial-gradient(1px 1px at 65% 45%, rgba(255,255,255,0.6), transparent);
-      background-size: 200% 200%, 250% 250%, 180% 180%, 220% 220%, 190% 190%, 210% 210%, 200% 200%;
-      animation: twinkle 8s ease-in-out infinite;
-      opacity: 0.8;
-    }
-
-    @keyframes twinkle {
-      0%, 100% { opacity: 0.8; }
-      50% { opacity: 1; }
-    }
-
-    /* Film grain */
-    .grain {
-      position: absolute;
-      inset: 0;
-      opacity: 0.04;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
-      pointer-events: none;
-    }
-
-    /* Content */
+    /* Center content */
     .content {
       position: relative;
       z-index: 1;
@@ -144,62 +46,113 @@
       text-align: center;
     }
 
-    .icon {
-      width: clamp(180px, 35vw, 320px);
-      height: auto;
-      margin-bottom: 3rem;
-      mix-blend-mode: lighten;
-      animation: fadeIn 1s ease-out;
+    /* 3D orbit scene */
+    .orbit-scene {
+      position: relative;
+      perspective: 1200px;
+      width: clamp(320px, 70vw, 600px);
+      height: clamp(320px, 70vw, 600px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 2rem;
     }
 
-    .coming-soon {
-      font-size: clamp(2.5rem, 6vw, 4rem);
+    .orbit-ring {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      transform-style: preserve-3d;
+      animation: orbit-spin 25s linear infinite;
+    }
+
+    @keyframes orbit-spin {
+      from { transform: rotateY(0deg); }
+      to { transform: rotateY(360deg); }
+    }
+
+    /* Letters orbiting in a circle */
+    .orbit-letter {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      font-size: clamp(0.9rem, 2.2vw, 1.3rem);
       font-weight: 700;
-      letter-spacing: -0.03em;
-      text-transform: uppercase;
-      color: #ffffff;
-      margin-bottom: 0.75rem;
-      animation: fadeIn 1s ease-out 0.2s both;
+      letter-spacing: 0.1em;
+      color: #fff;
+      transform-origin: center center;
+      white-space: nowrap;
     }
 
+    /* Center star icon - six-pointed, revolving */
+    .center-star {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: clamp(160px, 32vw, 280px);
+      height: clamp(160px, 32vw, 280px);
+      transform: translate(-50%, -50%);
+      animation: star-revolve 12s linear infinite;
+      z-index: 2;
+    }
+
+    .center-star svg {
+      width: 100%;
+      height: 100%;
+    }
+
+    @keyframes star-revolve {
+      from { transform: translate(-50%, -50%) rotate(0deg); }
+      to { transform: translate(-50%, -50%) rotate(360deg); }
+    }
+
+    /* Motto below */
     .tagline {
-      font-size: clamp(0.95rem, 2vw, 1.15rem);
+      font-size: clamp(0.85rem, 1.8vw, 1.1rem);
       font-weight: 500;
-      color: rgba(255, 255, 255, 0.75);
-      letter-spacing: 0.08em;
+      color: rgba(255, 255, 255, 0.8);
+      letter-spacing: 0.12em;
       text-transform: uppercase;
       max-width: 400px;
       line-height: 1.7;
-      animation: fadeIn 1s ease-out 0.4s both;
-    }
-
-    @keyframes fadeIn {
-      from {
-        opacity: 0;
-        transform: translateY(20px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
     }
   </style>
 </head>
 <body>
-  <div class="bg-wrapper">
-    <div class="orb orb-1"></div>
-    <div class="orb orb-2"></div>
-    <div class="orb orb-3"></div>
-    <div class="orb orb-4"></div>
-    <div class="orb orb-5"></div>
-    <div class="starfield"></div>
-    <div class="grain"></div>
-  </div>
+  <img src="assets/logo.png" alt="solvelab" class="logo-top">
 
   <main class="content">
-    <img src="assets/icon.png" alt="" class="icon">
-    <h1 class="coming-soon">Coming Soon</h1>
+    <div class="orbit-scene">
+      <div class="orbit-ring" id="orbitRing"></div>
+      <div class="center-star">
+        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+          <g stroke="#fff" stroke-width="5" stroke-linecap="round">
+            <line x1="8" y1="50" x2="92" y2="50"/>
+            <line x1="21" y1="21" x2="79" y2="79"/>
+            <line x1="21" y1="79" x2="79" y2="21"/>
+          </g>
+        </svg>
+      </div>
+    </div>
     <p class="tagline">Adapt, or get left behind.</p>
   </main>
+
+  <script>
+    const text = 'COMING SOON';
+    const radiusVw = 32;
+    const letters = text.split('');
+
+    const ring = document.getElementById('orbitRing');
+    letters.forEach((char, i) => {
+      const span = document.createElement('span');
+      span.className = 'orbit-letter';
+      span.textContent = char === ' ' ? '\u00A0' : char;
+      const angle = (i / letters.length) * 2 * Math.PI - Math.PI / 2;
+      const x = Math.cos(angle) * radiusVw;
+      const y = Math.sin(angle) * radiusVw;
+      span.style.transform = `translate(-50%, -50%) translate(${x}vw, ${y}vw) rotate(${angle * (180 / Math.PI) + 90}deg)`;
+      ring.appendChild(span);
+    });
+  </script>
 </body>
 </html>
